@@ -23,6 +23,7 @@ namespace AtribuicaoCabazesipps.Controllers
         // GET: Familias/Details/5
         public ActionResult Details(int? id)
         {
+            // lkjlkj daniel
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
