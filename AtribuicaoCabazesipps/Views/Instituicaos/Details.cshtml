@@ -1,0 +1,42 @@
+﻿@model AtribuicaoCabazesipps.Models.Instituicao
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Instituicao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeInstituicao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nomeInstituicao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nifInstituicao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nifInstituicao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefoneInstituicao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefoneInstituicao)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idInstituicao }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

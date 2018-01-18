@@ -1,0 +1,34 @@
+﻿@model AtribuicaoCabazesipps.Models.BancoAlimentar
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BancoAlimentar</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Beneficiario.nomeBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Beneficiario.nomeBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Instituicao.nomeInstituicao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Instituicao.nomeInstituicao)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idRegisto }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

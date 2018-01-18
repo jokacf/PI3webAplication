@@ -1,0 +1,64 @@
+﻿@model AtribuicaoCabazesipps.Models.Beneficiario
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Beneficiario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nomeBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nifBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nifBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.biBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.biBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefoneBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefoneBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Familia.nomeFamilia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Familia.nomeFamilia)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

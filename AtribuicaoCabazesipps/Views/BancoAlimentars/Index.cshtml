@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AtribuicaoCabazesipps.Models.BancoAlimentar>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Beneficiario.nomeBeneficiario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Instituicao.nomeInstituicao)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Beneficiario.nomeBeneficiario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Instituicao.nomeInstituicao)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.idRegisto }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.idRegisto }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.idRegisto })
+        </td>
+    </tr>
+}
+
+</table>

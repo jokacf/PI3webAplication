@@ -1,0 +1,66 @@
+﻿@model AtribuicaoCabazesipps.Models.Familia
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Familia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeFamilia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nomeFamilia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeResponsavel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nomeResponsavel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefoneResponsavel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefoneResponsavel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nifResponsavel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nifResponsavel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.biResponsavel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.biResponsavel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroMembros)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroMembros)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idFamilia }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
