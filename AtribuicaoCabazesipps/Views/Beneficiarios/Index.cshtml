@@ -1,0 +1,57 @@
+﻿@model IEnumerable<AtribuicaoCabazesipps.Models.Beneficiario>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nomeBeneficiario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nifBeneficiario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.biBeneficiario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telefoneBeneficiario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Familia.nomeFamilia)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomeBeneficiario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nifBeneficiario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.biBeneficiario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefoneBeneficiario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Familia.nomeFamilia)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.idBeneficiario }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.idBeneficiario }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.idBeneficiario })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<AtribuicaoCabazesipps.Models.Familia>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nomeFamilia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nomeResponsavel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telefoneResponsavel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nifResponsavel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.biResponsavel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numeroMembros)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomeFamilia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomeResponsavel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefoneResponsavel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nifResponsavel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.biResponsavel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numeroMembros)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.idFamilia }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.idFamilia }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.idFamilia })
+        </td>
+    </tr>
+}
+
+</table>

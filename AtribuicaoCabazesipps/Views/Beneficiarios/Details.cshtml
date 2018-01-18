@@ -1,0 +1,58 @@
+﻿@model AtribuicaoCabazesipps.Models.Beneficiario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Beneficiario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nomeBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nifBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nifBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.biBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.biBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefoneBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefoneBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Familia.nomeFamilia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Familia.nomeFamilia)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idBeneficiario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
