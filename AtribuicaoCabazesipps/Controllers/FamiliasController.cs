@@ -19,6 +19,7 @@ namespace AtribuicaoCabazesipps.Controllers
         {
             // ljhj joaquim
             // joka2
+            // Mierda
             return View(db.Familia.ToList());
         }
 
