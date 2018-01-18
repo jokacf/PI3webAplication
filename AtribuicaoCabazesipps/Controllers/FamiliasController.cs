@@ -18,6 +18,7 @@ namespace AtribuicaoCabazesipps.Controllers
         public ActionResult Index()
         {
             // ljhj joaquim
+            // hjhgh daniel
             return View(db.Familia.ToList());
         }
 
