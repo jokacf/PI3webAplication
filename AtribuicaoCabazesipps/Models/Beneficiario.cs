@@ -14,19 +14,12 @@ namespace AtribuicaoCabazesipps.Models
     
     public partial class Beneficiario
     {
-        private Beneficiario beneficiario;
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Beneficiario()
         {
             this.BancoAlimentar = new HashSet<BancoAlimentar>();
         }
-
-        public Beneficiario(Beneficiario beneficiario)
-        {
-            this.beneficiario = beneficiario;
-        }
-
+    
         public int idBeneficiario { get; set; }
         public string nomeBeneficiario { get; set; }
         public int nifBeneficiario { get; set; }

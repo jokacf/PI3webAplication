@@ -10,6 +10,7 @@ using AtribuicaoCabazesipps.Models;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
+    [Authorize]
     public class FamiliasController : Controller
     {
         private gestaoCabazesEntities db = new gestaoCabazesEntities();
@@ -21,6 +22,12 @@ namespace AtribuicaoCabazesipps.Controllers
             // joka2
             return View(db.Familia.ToList());
         }
+
+        public ActionResult byInstituicao(int id)
+        {
+            var beneficiarios = db.Instituicao.Where(m => m.idInstituicao.Equals(id)).ToList();
+            return View(beneficiarios);
+       }
 
         // GET: Familias/Details/5
         public ActionResult Details(int? id)

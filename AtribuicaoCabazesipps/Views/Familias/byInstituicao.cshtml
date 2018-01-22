@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AtribuicaoCabazesipps.Models.Instituicao>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nomeInstituicao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nifInstituicao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telefoneInstituicao)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomeInstituicao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nifInstituicao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefoneInstituicao)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idInstituicao }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idInstituicao }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idInstituicao })
+        </td>
+    </tr>
+}
+
+</table>

@@ -348,6 +348,7 @@
     <Content Include="Views\BancoAlimentars\Index.cshtml" />
     <Content Include="Views\Home\AfterRegister.cshtml" />
     <Content Include="Views\Beneficiarios\Create.cshtml" />
+    <Content Include="Views\Familias\byInstituicao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
