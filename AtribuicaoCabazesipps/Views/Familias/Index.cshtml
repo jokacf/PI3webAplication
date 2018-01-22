@@ -1,26 +1,26 @@
 ﻿@model IEnumerable<AtribuicaoCabazesipps.Models.Familia>
 
-<h2>Familias apoiadas por o Banco Alimentar</h2>
+<h2>Familias</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.nomeFamilia)
+            @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.nomeResponsavel)
+            @Html.DisplayNameFor(model => model.NomeResponsavel)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.telefoneResponsavel)
+            @Html.DisplayNameFor(model => model.TelefoneResponsavel)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.nifResponsavel)
+            @Html.DisplayNameFor(model => model.NIFResponsavel)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.biResponsavel)
+            @Html.DisplayNameFor(model => model.BIResponsavel)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.numeroMembros)
+            @Html.DisplayNameFor(model => model.NumeroMembros)
         </th>
         <th></th>
     </tr>
@@ -28,27 +28,27 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.nomeFamilia)
+            @Html.DisplayFor(modelItem => item.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.nomeResponsavel)
+            @Html.DisplayFor(modelItem => item.NomeResponsavel)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.telefoneResponsavel)
+            @Html.DisplayFor(modelItem => item.TelefoneResponsavel)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.nifResponsavel)
+            @Html.DisplayFor(modelItem => item.NIFResponsavel)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.biResponsavel)
+            @Html.DisplayFor(modelItem => item.BIResponsavel)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.numeroMembros)
+            @Html.DisplayFor(modelItem => item.NumeroMembros)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.idFamilia }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.idFamilia }) |
-            @Html.ActionLink("Apagar", "Delete", new { id=item.idFamilia })
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

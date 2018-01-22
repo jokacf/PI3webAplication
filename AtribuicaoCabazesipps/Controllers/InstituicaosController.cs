@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AtribuicaoCabazesipps.Models;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
     public class InstituicaosController : Controller
     {
-        private gestaoCabazesEntities db = new gestaoCabazesEntities();
+        private bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
 
         // GET: Instituicaos
         public ActionResult Index()
@@ -36,7 +38,6 @@ namespace AtribuicaoCabazesipps.Controllers
         }
 
         // GET: Instituicaos/Create
-        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -46,12 +47,13 @@ namespace AtribuicaoCabazesipps.Controllers
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idInstituicao,nomeInstituicao,nifInstituicao,telefoneInstituicao")] Instituicao instituicao)
+        public ActionResult Create([Bind(Include = "Id,Nome,Nif,Telefone")] Instituicao instituicao)
         {
             if (ModelState.IsValid)
             {
+                var id = (string)Session["lastIdregistered"];
+                instituicao.IdUser = id;
                 db.Instituicao.Add(instituicao);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -61,7 +63,6 @@ namespace AtribuicaoCabazesipps.Controllers
         }
 
         // GET: Instituicaos/Edit/5
-        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,9 +81,8 @@ namespace AtribuicaoCabazesipps.Controllers
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idInstituicao,nomeInstituicao,nifInstituicao,telefoneInstituicao")] Instituicao instituicao)
+        public ActionResult Edit([Bind(Include = "Id,Nome,Nif,Telefone,IdUser")] Instituicao instituicao)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,6 @@ namespace AtribuicaoCabazesipps.Controllers
         }
 
         // GET: Instituicaos/Delete/5
-        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -111,7 +110,6 @@ namespace AtribuicaoCabazesipps.Controllers
 
         // POST: Instituicaos/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

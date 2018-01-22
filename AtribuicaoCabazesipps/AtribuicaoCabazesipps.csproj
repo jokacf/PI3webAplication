@@ -192,7 +192,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BancoAlimentarsController.cs" />
     <Compile Include="Controllers\BeneficiariosController.cs" />
     <Compile Include="Controllers\FamiliasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -203,51 +202,48 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRoles.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserClaims.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogins.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUsers.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BancoAlimentar.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+    <Compile Include="Models\BancoAlimentarCabazes.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BancoAlimentarCabazes.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BancoAlimentarCabazes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BancoAlimentarCabazes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BancoAlimentarCabazes.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Beneficiario.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Familia.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\gestaoCabazes.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>gestaoCabazes.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\gestaoCabazes.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\gestaoCabazes.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>gestaoCabazes.edmx</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Instituicao.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>gestaoCabazes.tt</DependentUpon>
+      <DependentUpon>BancoAlimentarCabazes.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -259,27 +255,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\gestaoCabazes.Context.tt">
+    <Content Include="Models\BancoAlimentarCabazes.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>gestaoCabazes.edmx</DependentUpon>
-      <LastGenOutput>gestaoCabazes.Context.cs</LastGenOutput>
+      <DependentUpon>BancoAlimentarCabazes.edmx</DependentUpon>
+      <LastGenOutput>BancoAlimentarCabazes.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\gestaoCabazes.tt">
+    <Content Include="Models\BancoAlimentarCabazes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>gestaoCabazes.edmx</DependentUpon>
-      <LastGenOutput>gestaoCabazes.cs</LastGenOutput>
+      <DependentUpon>BancoAlimentarCabazes.edmx</DependentUpon>
+      <LastGenOutput>BancoAlimentarCabazes.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\gestaoCabazes.edmx">
+    <EntityDeploy Include="Models\BancoAlimentarCabazes.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>gestaoCabazes.Designer.cs</LastGenOutput>
+      <LastGenOutput>BancoAlimentarCabazes.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\gestaoCabazes.edmx.diagram">
-      <DependentUpon>gestaoCabazes.edmx</DependentUpon>
+    <Content Include="Models\BancoAlimentarCabazes.edmx.diagram">
+      <DependentUpon>BancoAlimentarCabazes.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -341,11 +337,6 @@
     <Content Include="Views\Beneficiarios\Details.cshtml" />
     <Content Include="Views\Beneficiarios\Edit.cshtml" />
     <Content Include="Views\Beneficiarios\Index.cshtml" />
-    <Content Include="Views\BancoAlimentars\Create.cshtml" />
-    <Content Include="Views\BancoAlimentars\Delete.cshtml" />
-    <Content Include="Views\BancoAlimentars\Details.cshtml" />
-    <Content Include="Views\BancoAlimentars\Edit.cshtml" />
-    <Content Include="Views\BancoAlimentars\Index.cshtml" />
     <Content Include="Views\Home\AfterRegister.cshtml" />
     <Content Include="Views\Beneficiarios\Create.cshtml" />
     <Content Include="Views\Familias\byInstituicao.cshtml" />

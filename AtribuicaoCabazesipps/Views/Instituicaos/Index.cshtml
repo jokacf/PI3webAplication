@@ -1,24 +1,16 @@
 ﻿@model IEnumerable<AtribuicaoCabazesipps.Models.Instituicao>
+<h2>Instituições registadas</h2>
 
-@{
-    ViewBag.Title = "Instituições registadas";
-}
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.nomeInstituicao)
+            @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.nifInstituicao)
+            @Html.DisplayNameFor(model => model.NIF)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.telefoneInstituicao)
+            @Html.DisplayNameFor(model => model.Telefone)
         </th>
         <th></th>
     </tr>
@@ -26,18 +18,18 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.nomeInstituicao)
+            @Html.DisplayFor(modelItem => item.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.nifInstituicao)
+            @Html.DisplayFor(modelItem => item.NIF)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.telefoneInstituicao)
+            @Html.DisplayFor(modelItem => item.Telefone)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.idInstituicao }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.idInstituicao }) |
-            @Html.ActionLink("Apagar", "Delete", new { id=item.idInstituicao })
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

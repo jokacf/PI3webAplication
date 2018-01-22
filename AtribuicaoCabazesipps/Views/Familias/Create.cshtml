@@ -1,64 +1,77 @@
 ﻿@model AtribuicaoCabazesipps.Models.Familia
 
-@{
-    ViewBag.Title = "Registar nova familia";
-}
+<h2>Registar Familia</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Familia</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.nomeFamilia,"Nome: " ,htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nomeFamilia, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nomeFamilia, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.nomeResponsavel,"Nome do responsavel: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.NomeResponsavel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nomeResponsavel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nomeResponsavel, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.NomeResponsavel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NomeResponsavel, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.telefoneResponsavel,"Telefone do responsavel: " ,htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TelefoneResponsavel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.telefoneResponsavel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.telefoneResponsavel, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.TelefoneResponsavel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TelefoneResponsavel, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.nifResponsavel,"NIF do responsavel:  " ,htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.NIFResponsavel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nifResponsavel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nifResponsavel, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.NIFResponsavel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NIFResponsavel, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.biResponsavel,"BI do responsavel: " ,htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BIResponsavel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.biResponsavel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.biResponsavel, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.BIResponsavel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BIResponsavel, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.numeroMembros,"Numero de membros: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.NumeroMembros, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.numeroMembros, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.numeroMembros, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.NumeroMembros, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumeroMembros, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+    @Html.LabelFor(model => model.IdInstituicao, "", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @if (null != @ViewBag.IdInstituicao)
+                {
+            <input type="hidden" name="fk_idFamilia" value="@ViewBag.IdInstituicao" />
+                    
+        }
+        else
+        {
+            @Html.DropDownList("IdInstituicao", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdInstituicao, "", new { @class = "text-danger" })
+        }
+    </div>
+</div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -69,5 +82,5 @@
 }
 
 <div>
-    @Html.ActionLink("Voltar atras","Index","Familias")
+    @Html.ActionLink("Voltar atras", "Index")
 </div>

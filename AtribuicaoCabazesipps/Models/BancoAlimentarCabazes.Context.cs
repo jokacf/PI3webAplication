@@ -13,10 +13,10 @@ namespace AtribuicaoCabazesipps.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class gestaoCabazesEntities : DbContext
+    public partial class bancoAlimentarCabazesEntidades : DbContext
     {
-        public gestaoCabazesEntities()
-            : base("name=gestaoCabazesEntities")
+        public bancoAlimentarCabazesEntidades()
+            : base("name=bancoAlimentarCabazesEntidades")
         {
         }
     
@@ -30,7 +30,6 @@ namespace AtribuicaoCabazesipps.Models
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<BancoAlimentar> BancoAlimentar { get; set; }
         public virtual DbSet<Beneficiario> Beneficiario { get; set; }
         public virtual DbSet<Familia> Familia { get; set; }
         public virtual DbSet<Instituicao> Instituicao { get; set; }

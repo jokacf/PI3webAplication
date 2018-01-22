@@ -12,7 +12,7 @@ using AtribuicaoCabazesipps.Models;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -136,7 +136,7 @@ namespace AtribuicaoCabazesipps.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         //[AllowAnonymous]
         public ActionResult Register()
         {
@@ -146,7 +146,7 @@ namespace AtribuicaoCabazesipps.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         //[AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
@@ -157,9 +157,11 @@ namespace AtribuicaoCabazesipps.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    gestaoCabazesEntities db = new gestaoCabazesEntities();
+                    bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
                     var currentUser = UserManager.FindById(user.Id);
+                    Session["lastIdregistered"] = currentUser.Id;
                     var roleresult = UserManager.AddToRole(currentUser.Id, "Instituicao");
+
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // Para obter mais informações sobre como habilitar a confirmação da conta e redefinição de senha, visite https://go.microsoft.com/fwlink/?LinkID=320771

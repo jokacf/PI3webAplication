@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="gestaoCabazesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="bancoAlimentarCabazesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -65,47 +65,40 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="isAdmin" Type="bit" />
-        </EntityType>
-        <EntityType Name="BancoAlimentar">
-          <Key>
-            <PropertyRef Name="idRegisto" />
-          </Key>
-          <Property Name="idRegisto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="fk_idInstituicao" Type="int" Nullable="false" />
-          <Property Name="fk_idBeneficiario" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Beneficiario">
           <Key>
-            <PropertyRef Name="idBeneficiario" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idBeneficiario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nomeBeneficiario" Type="text" Nullable="false" />
-          <Property Name="nifBeneficiario" Type="int" Nullable="false" />
-          <Property Name="biBeneficiario" Type="int" Nullable="false" />
-          <Property Name="telefoneBeneficiario" Type="int" Nullable="false" />
-          <Property Name="fk_idFamilia" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="text" Nullable="false" />
+          <Property Name="NIF" Type="int" Nullable="false" />
+          <Property Name="BI" Type="int" Nullable="false" />
+          <Property Name="Telefone" Type="int" Nullable="false" />
+          <Property Name="IdFamilia" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Familia">
           <Key>
-            <PropertyRef Name="idFamilia" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idFamilia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nomeFamilia" Type="text" Nullable="false" />
-          <Property Name="nomeResponsavel" Type="text" Nullable="false" />
-          <Property Name="telefoneResponsavel" Type="text" Nullable="false" />
-          <Property Name="nifResponsavel" Type="int" Nullable="false" />
-          <Property Name="biResponsavel" Type="int" Nullable="false" />
-          <Property Name="numeroMembros" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="text" Nullable="false" />
+          <Property Name="NomeResponsavel" Type="text" Nullable="false" />
+          <Property Name="TelefoneResponsavel" Type="int" Nullable="false" />
+          <Property Name="NIFResponsavel" Type="int" Nullable="false" />
+          <Property Name="BIResponsavel" Type="int" Nullable="false" />
+          <Property Name="NumeroMembros" Type="int" Nullable="false" />
+          <Property Name="IdInstituicao" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Instituicao">
           <Key>
-            <PropertyRef Name="idInstituicao" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idInstituicao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nomeInstituicao" Type="text" Nullable="false" />
-          <Property Name="nifInstituicao" Type="int" Nullable="false" />
-          <Property Name="telefoneInstituicao" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="text" Nullable="false" />
+          <Property Name="NIF" Type="int" Nullable="false" />
+          <Property Name="Telefone" Type="int" Nullable="false" />
+          <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -117,18 +110,6 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK_Beneficiario_to_BancoAlimentar">
-          <End Role="Beneficiario" Type="Self.Beneficiario" Multiplicity="1" />
-          <End Role="BancoAlimentar" Type="Self.BancoAlimentar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Beneficiario">
-              <PropertyRef Name="idBeneficiario" />
-            </Principal>
-            <Dependent Role="BancoAlimentar">
-              <PropertyRef Name="fk_idBeneficiario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -185,46 +166,53 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Familia_to_Beneficiario">
+        <Association Name="FK_Familia_Beneficiario">
           <End Role="Familia" Type="Self.Familia" Multiplicity="1" />
           <End Role="Beneficiario" Type="Self.Beneficiario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Familia">
-              <PropertyRef Name="idFamilia" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Beneficiario">
-              <PropertyRef Name="fk_idFamilia" />
+              <PropertyRef Name="IdFamilia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Instituicao_to_BancoAlimentar">
+        <Association Name="FK_Instituicao_Familia">
           <End Role="Instituicao" Type="Self.Instituicao" Multiplicity="1" />
-          <End Role="BancoAlimentar" Type="Self.BancoAlimentar" Multiplicity="*" />
+          <End Role="Familia" Type="Self.Familia" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Instituicao">
-              <PropertyRef Name="idInstituicao" />
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="BancoAlimentar">
-              <PropertyRef Name="fk_idInstituicao" />
+            <Dependent Role="Familia">
+              <PropertyRef Name="IdInstituicao" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="gestaoCabazesModelStoreContainer">
+        <Association Name="FK_User_Instituicao">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Instituicao" Type="Self.Instituicao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Instituicao">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bancoAlimentarCabazesModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BancoAlimentar" EntityType="Self.BancoAlimentar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Beneficiario" EntityType="Self.Beneficiario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Familia" EntityType="Self.Familia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Instituicao" EntityType="Self.Instituicao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Beneficiario_to_BancoAlimentar" Association="Self.FK_Beneficiario_to_BancoAlimentar">
-            <End Role="Beneficiario" EntitySet="Beneficiario" />
-            <End Role="BancoAlimentar" EntitySet="BancoAlimentar" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -241,20 +229,24 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Familia_to_Beneficiario" Association="Self.FK_Familia_to_Beneficiario">
+          <AssociationSet Name="FK_Familia_Beneficiario" Association="Self.FK_Familia_Beneficiario">
             <End Role="Familia" EntitySet="Familia" />
             <End Role="Beneficiario" EntitySet="Beneficiario" />
           </AssociationSet>
-          <AssociationSet Name="FK_Instituicao_to_BancoAlimentar" Association="Self.FK_Instituicao_to_BancoAlimentar">
+          <AssociationSet Name="FK_Instituicao_Familia" Association="Self.FK_Instituicao_Familia">
             <End Role="Instituicao" EntitySet="Instituicao" />
-            <End Role="BancoAlimentar" EntitySet="BancoAlimentar" />
+            <End Role="Familia" EntitySet="Familia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Instituicao" Association="Self.FK_User_Instituicao">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Instituicao" EntitySet="Instituicao" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="gestaoCabazesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="bancoAlimentarCabazesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -310,56 +302,49 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="isAdmin" Type="Boolean" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Instituicao" Relationship="Self.FK_User_Instituicao" FromRole="AspNetUsers" ToRole="Instituicao" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-        </EntityType>
-        <EntityType Name="BancoAlimentar">
-          <Key>
-            <PropertyRef Name="idRegisto" />
-          </Key>
-          <Property Name="idRegisto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fk_idInstituicao" Type="Int32" Nullable="false" />
-          <Property Name="fk_idBeneficiario" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Beneficiario" Relationship="Self.FK_Beneficiario_to_BancoAlimentar" FromRole="BancoAlimentar" ToRole="Beneficiario" />
-          <NavigationProperty Name="Instituicao" Relationship="Self.FK_Instituicao_to_BancoAlimentar" FromRole="BancoAlimentar" ToRole="Instituicao" />
         </EntityType>
         <EntityType Name="Beneficiario">
           <Key>
-            <PropertyRef Name="idBeneficiario" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idBeneficiario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nomeBeneficiario" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nifBeneficiario" Type="Int32" Nullable="false" />
-          <Property Name="biBeneficiario" Type="Int32" Nullable="false" />
-          <Property Name="telefoneBeneficiario" Type="Int32" Nullable="false" />
-          <Property Name="fk_idFamilia" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BancoAlimentar" Relationship="Self.FK_Beneficiario_to_BancoAlimentar" FromRole="Beneficiario" ToRole="BancoAlimentar" />
-          <NavigationProperty Name="Familia" Relationship="Self.FK_Familia_to_Beneficiario" FromRole="Beneficiario" ToRole="Familia" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NIF" Type="Int32" Nullable="false" />
+          <Property Name="BI" Type="Int32" Nullable="false" />
+          <Property Name="Telefone" Type="Int32" Nullable="false" />
+          <Property Name="IdFamilia" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Familia" Relationship="Self.FK_Familia_Beneficiario" FromRole="Beneficiario" ToRole="Familia" />
         </EntityType>
         <EntityType Name="Familia">
           <Key>
-            <PropertyRef Name="idFamilia" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idFamilia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nomeFamilia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nomeResponsavel" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="telefoneResponsavel" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nifResponsavel" Type="Int32" Nullable="false" />
-          <Property Name="biResponsavel" Type="Int32" Nullable="false" />
-          <Property Name="numeroMembros" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Beneficiario" Relationship="Self.FK_Familia_to_Beneficiario" FromRole="Familia" ToRole="Beneficiario" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NomeResponsavel" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TelefoneResponsavel" Type="Int32" Nullable="false" />
+          <Property Name="NIFResponsavel" Type="Int32" Nullable="false" />
+          <Property Name="BIResponsavel" Type="Int32" Nullable="false" />
+          <Property Name="NumeroMembros" Type="Int32" Nullable="false" />
+          <Property Name="IdInstituicao" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Beneficiario" Relationship="Self.FK_Familia_Beneficiario" FromRole="Familia" ToRole="Beneficiario" />
+          <NavigationProperty Name="Instituicao" Relationship="Self.FK_Instituicao_Familia" FromRole="Familia" ToRole="Instituicao" />
         </EntityType>
         <EntityType Name="Instituicao">
           <Key>
-            <PropertyRef Name="idInstituicao" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idInstituicao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nomeInstituicao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nifInstituicao" Type="Int32" Nullable="false" />
-          <Property Name="telefoneInstituicao" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BancoAlimentar" Relationship="Self.FK_Instituicao_to_BancoAlimentar" FromRole="Instituicao" ToRole="BancoAlimentar" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NIF" Type="Int32" Nullable="false" />
+          <Property Name="Telefone" Type="Int32" Nullable="false" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_User_Instituicao" FromRole="Instituicao" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Familia" Relationship="Self.FK_Instituicao_Familia" FromRole="Instituicao" ToRole="Familia" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -399,39 +384,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Beneficiario_to_BancoAlimentar">
-          <End Role="Beneficiario" Type="Self.Beneficiario" Multiplicity="1" />
-          <End Role="BancoAlimentar" Type="Self.BancoAlimentar" Multiplicity="*" />
+        <Association Name="FK_User_Instituicao">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Instituicao" Type="Self.Instituicao" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Beneficiario">
-              <PropertyRef Name="idBeneficiario" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="BancoAlimentar">
-              <PropertyRef Name="fk_idBeneficiario" />
+            <Dependent Role="Instituicao">
+              <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Instituicao_to_BancoAlimentar">
-          <End Role="Instituicao" Type="Self.Instituicao" Multiplicity="1" />
-          <End Role="BancoAlimentar" Type="Self.BancoAlimentar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Instituicao">
-              <PropertyRef Name="idInstituicao" />
-            </Principal>
-            <Dependent Role="BancoAlimentar">
-              <PropertyRef Name="fk_idInstituicao" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Familia_to_Beneficiario">
+        <Association Name="FK_Familia_Beneficiario">
           <End Role="Familia" Type="Self.Familia" Multiplicity="1" />
           <End Role="Beneficiario" Type="Self.Beneficiario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Familia">
-              <PropertyRef Name="idFamilia" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Beneficiario">
-              <PropertyRef Name="fk_idFamilia" />
+              <PropertyRef Name="IdFamilia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Instituicao_Familia">
+          <End Role="Instituicao" Type="Self.Instituicao" Multiplicity="1" />
+          <End Role="Familia" Type="Self.Familia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instituicao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Familia">
+              <PropertyRef Name="IdInstituicao" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -439,13 +424,12 @@
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="gestaoCabazesEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="bancoAlimentarCabazesEntidades" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <EntitySet Name="BancoAlimentar" EntityType="Self.BancoAlimentar" />
           <EntitySet Name="Beneficiario" EntityType="Self.Beneficiario" />
           <EntitySet Name="Familia" EntityType="Self.Familia" />
           <EntitySet Name="Instituicao" EntityType="Self.Instituicao" />
@@ -458,17 +442,17 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_Beneficiario_to_BancoAlimentar" Association="Self.FK_Beneficiario_to_BancoAlimentar">
-            <End Role="Beneficiario" EntitySet="Beneficiario" />
-            <End Role="BancoAlimentar" EntitySet="BancoAlimentar" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Instituicao_to_BancoAlimentar" Association="Self.FK_Instituicao_to_BancoAlimentar">
+          <AssociationSet Name="FK_User_Instituicao" Association="Self.FK_User_Instituicao">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Instituicao" EntitySet="Instituicao" />
-            <End Role="BancoAlimentar" EntitySet="BancoAlimentar" />
           </AssociationSet>
-          <AssociationSet Name="FK_Familia_to_Beneficiario" Association="Self.FK_Familia_to_Beneficiario">
+          <AssociationSet Name="FK_Familia_Beneficiario" Association="Self.FK_Familia_Beneficiario">
             <End Role="Familia" EntitySet="Familia" />
             <End Role="Beneficiario" EntitySet="Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Instituicao_Familia" Association="Self.FK_Instituicao_Familia">
+            <End Role="Instituicao" EntitySet="Instituicao" />
+            <End Role="Familia" EntitySet="Familia" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -480,9 +464,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="gestaoCabazesModelStoreContainer" CdmEntityContainer="gestaoCabazesEntities">
+        <EntityContainerMapping StorageEntityContainer="bancoAlimentarCabazesModelStoreContainer" CdmEntityContainer="bancoAlimentarCabazesEntidades">
           <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.C__MigrationHistory">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
@@ -492,7 +476,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.AspNetRoles">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.AspNetRoles">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -500,7 +484,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.AspNetUserClaims">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.AspNetUserClaims">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -510,7 +494,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.AspNetUserLogins">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.AspNetUserLogins">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -519,7 +503,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.AspNetUsers">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -533,56 +517,48 @@
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BancoAlimentar">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.BancoAlimentar">
-              <MappingFragment StoreEntitySet="BancoAlimentar">
-                <ScalarProperty Name="idRegisto" ColumnName="idRegisto" />
-                <ScalarProperty Name="fk_idInstituicao" ColumnName="fk_idInstituicao" />
-                <ScalarProperty Name="fk_idBeneficiario" ColumnName="fk_idBeneficiario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Beneficiario">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.Beneficiario">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.Beneficiario">
               <MappingFragment StoreEntitySet="Beneficiario">
-                <ScalarProperty Name="idBeneficiario" ColumnName="idBeneficiario" />
-                <ScalarProperty Name="nomeBeneficiario" ColumnName="nomeBeneficiario" />
-                <ScalarProperty Name="nifBeneficiario" ColumnName="nifBeneficiario" />
-                <ScalarProperty Name="biBeneficiario" ColumnName="biBeneficiario" />
-                <ScalarProperty Name="telefoneBeneficiario" ColumnName="telefoneBeneficiario" />
-                <ScalarProperty Name="fk_idFamilia" ColumnName="fk_idFamilia" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="NIF" ColumnName="NIF" />
+                <ScalarProperty Name="BI" ColumnName="BI" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="IdFamilia" ColumnName="IdFamilia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Familia">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.Familia">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.Familia">
               <MappingFragment StoreEntitySet="Familia">
-                <ScalarProperty Name="idFamilia" ColumnName="idFamilia" />
-                <ScalarProperty Name="nomeFamilia" ColumnName="nomeFamilia" />
-                <ScalarProperty Name="nomeResponsavel" ColumnName="nomeResponsavel" />
-                <ScalarProperty Name="telefoneResponsavel" ColumnName="telefoneResponsavel" />
-                <ScalarProperty Name="nifResponsavel" ColumnName="nifResponsavel" />
-                <ScalarProperty Name="biResponsavel" ColumnName="biResponsavel" />
-                <ScalarProperty Name="numeroMembros" ColumnName="numeroMembros" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="NomeResponsavel" ColumnName="NomeResponsavel" />
+                <ScalarProperty Name="TelefoneResponsavel" ColumnName="TelefoneResponsavel" />
+                <ScalarProperty Name="NIFResponsavel" ColumnName="NIFResponsavel" />
+                <ScalarProperty Name="BIResponsavel" ColumnName="BIResponsavel" />
+                <ScalarProperty Name="NumeroMembros" ColumnName="NumeroMembros" />
+                <ScalarProperty Name="IdInstituicao" ColumnName="IdInstituicao" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Instituicao">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.Instituicao">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.Instituicao">
               <MappingFragment StoreEntitySet="Instituicao">
-                <ScalarProperty Name="idInstituicao" ColumnName="idInstituicao" />
-                <ScalarProperty Name="nomeInstituicao" ColumnName="nomeInstituicao" />
-                <ScalarProperty Name="nifInstituicao" ColumnName="nifInstituicao" />
-                <ScalarProperty Name="telefoneInstituicao" ColumnName="telefoneInstituicao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="NIF" ColumnName="NIF" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="gestaoCabazesModel.sysdiagrams">
+            <EntityTypeMapping TypeName="bancoAlimentarCabazesModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -592,7 +568,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="gestaoCabazesModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="bancoAlimentarCabazesModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>

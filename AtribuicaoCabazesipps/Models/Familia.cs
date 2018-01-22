@@ -20,15 +20,17 @@ namespace AtribuicaoCabazesipps.Models
             this.Beneficiario = new HashSet<Beneficiario>();
         }
     
-        public int idFamilia { get; set; }
-        public string nomeFamilia { get; set; }
-        public string nomeResponsavel { get; set; }
-        public string telefoneResponsavel { get; set; }
-        public int nifResponsavel { get; set; }
-        public int biResponsavel { get; set; }
-        public int numeroMembros { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string NomeResponsavel { get; set; }
+        public int TelefoneResponsavel { get; set; }
+        public int NIFResponsavel { get; set; }
+        public int BIResponsavel { get; set; }
+        public int NumeroMembros { get; set; }
+        public int IdInstituicao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Beneficiario> Beneficiario { get; set; }
+        public virtual Instituicao Instituicao { get; set; }
     }
 }

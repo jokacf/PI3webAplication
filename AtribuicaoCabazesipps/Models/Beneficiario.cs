@@ -14,21 +14,13 @@ namespace AtribuicaoCabazesipps.Models
     
     public partial class Beneficiario
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Beneficiario()
-        {
-            this.BancoAlimentar = new HashSet<BancoAlimentar>();
-        }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public int NIF { get; set; }
+        public int BI { get; set; }
+        public int Telefone { get; set; }
+        public int IdFamilia { get; set; }
     
-        public int idBeneficiario { get; set; }
-        public string nomeBeneficiario { get; set; }
-        public int nifBeneficiario { get; set; }
-        public int biBeneficiario { get; set; }
-        public int telefoneBeneficiario { get; set; }
-        public int fk_idFamilia { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BancoAlimentar> BancoAlimentar { get; set; }
         public virtual Familia Familia { get; set; }
     }
 }

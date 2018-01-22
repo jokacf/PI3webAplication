@@ -11,56 +11,64 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.nomeFamilia)
+            @Html.DisplayNameFor(model => model.Nome)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.nomeFamilia)
+            @Html.DisplayFor(model => model.Nome)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.nomeResponsavel)
+            @Html.DisplayNameFor(model => model.NomeResponsavel)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.nomeResponsavel)
+            @Html.DisplayFor(model => model.NomeResponsavel)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.telefoneResponsavel)
+            @Html.DisplayNameFor(model => model.TelefoneResponsavel)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.telefoneResponsavel)
+            @Html.DisplayFor(model => model.TelefoneResponsavel)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.nifResponsavel)
+            @Html.DisplayNameFor(model => model.NIFResponsavel)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.nifResponsavel)
+            @Html.DisplayFor(model => model.NIFResponsavel)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.biResponsavel)
+            @Html.DisplayNameFor(model => model.BIResponsavel)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.biResponsavel)
+            @Html.DisplayFor(model => model.BIResponsavel)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.numeroMembros)
+            @Html.DisplayNameFor(model => model.NumeroMembros)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.numeroMembros)
+            @Html.DisplayFor(model => model.NumeroMembros)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Instituicao.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Instituicao.Nome)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.idFamilia }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar atras", "Index")
 </p>

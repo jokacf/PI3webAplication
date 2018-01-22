@@ -10,10 +10,9 @@ using AtribuicaoCabazesipps.Models;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
-    [Authorize]
     public class BeneficiariosController : Controller
     {
-        private gestaoCabazesEntities db = new gestaoCabazesEntities();
+        private bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
 
         // GET: Beneficiarios
         public ActionResult Index()
@@ -23,7 +22,6 @@ namespace AtribuicaoCabazesipps.Controllers
         }
 
         // GET: Beneficiarios/Details/5
-
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,19 +37,9 @@ namespace AtribuicaoCabazesipps.Controllers
         }
 
         // GET: Beneficiarios/Create
-       
         public ActionResult Create()
         {
-            try
-            {
-                int idFamilia = (int)TempData["idFamilia"];
-                ViewBag.Familia = db.Familia.Where(f => f.idFamilia == idFamilia).First();
-            }
-            catch (Exception e)
-            {
-
-            }         
-            ViewBag.fk_idFamilia = new SelectList(db.Familia, "idFamilia", "nomeFamilia");
+            ViewBag.IdFamilia = new SelectList(db.Familia, "Id", "Nome");
             return View();
         }
 
@@ -60,23 +48,16 @@ namespace AtribuicaoCabazesipps.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idBeneficiario,nomeBeneficiario,nifBeneficiario,biBeneficiario,telefoneBeneficiario,fk_idFamilia")] Beneficiario beneficiario)
+        public ActionResult Create([Bind(Include = "Id,Nome,NIF,BI,Telefone,IdFamilia")] Beneficiario beneficiario)
         {
             if (ModelState.IsValid)
             {
                 db.Beneficiario.Add(beneficiario);
                 db.SaveChanges();
-                var numeroMembrosRequerido = db.Familia.Where(f => f.idFamilia == beneficiario.fk_idFamilia).First().numeroMembros - 1;
-                var numeroDeMembrosRegistados = db.Beneficiario.Count(b => b.fk_idFamilia == beneficiario.Familia.idFamilia);
-                if (numeroMembrosRequerido > numeroDeMembrosRegistados)
-                {
-                    TempData["idFamilia"] = beneficiario.fk_idFamilia;
-                    return RedirectToAction("Create");
-                }
                 return RedirectToAction("Index");
             }
 
-            ViewBag.fk_idFamilia = new SelectList(db.Familia, "idFamilia", "nomeFamilia", beneficiario.fk_idFamilia);
+            ViewBag.IdFamilia = new SelectList(db.Familia, "Id", "Nome", beneficiario.IdFamilia);
             return View(beneficiario);
         }
 
@@ -92,7 +73,7 @@ namespace AtribuicaoCabazesipps.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.fk_idFamilia = new SelectList(db.Familia, "idFamilia", "nomeFamilia", beneficiario.fk_idFamilia);
+            ViewBag.IdFamilia = new SelectList(db.Familia, "Id", "Nome", beneficiario.IdFamilia);
             return View(beneficiario);
         }
 
@@ -101,7 +82,7 @@ namespace AtribuicaoCabazesipps.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idBeneficiario,nomeBeneficiario,nifBeneficiario,biBeneficiario,telefoneBeneficiario,fk_idFamilia")] Beneficiario beneficiario)
+        public ActionResult Edit([Bind(Include = "Id,Nome,NIF,BI,Telefone,IdFamilia")] Beneficiario beneficiario)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +90,7 @@ namespace AtribuicaoCabazesipps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.fk_idFamilia = new SelectList(db.Familia, "idFamilia", "nomeFamilia", beneficiario.fk_idFamilia);
+            ViewBag.IdFamilia = new SelectList(db.Familia, "Id", "Nome", beneficiario.IdFamilia);
             return View(beneficiario);
         }
 

@@ -1,58 +1,54 @@
 ﻿@model AtribuicaoCabazesipps.Models.Beneficiario
 
-@{
-    ViewBag.Title = "Details";
-}
 
-<h2>Details</h2>
+<h2>Detalhes</h2>
 
 <div>
-    <h4>Beneficiario</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.nomeBeneficiario)
+            @Html.DisplayNameFor(model => model.NIF)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.nomeBeneficiario)
+            @Html.DisplayFor(model => model.Nome)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.nifBeneficiario)
+            @Html.DisplayNameFor(model => model.NIF)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.nifBeneficiario)
+            @Html.DisplayFor(model => model.NIF)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.biBeneficiario)
+            @Html.DisplayNameFor(model => model.BI)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.biBeneficiario)
+            @Html.DisplayFor(model => model.BI)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.telefoneBeneficiario)
+            @Html.DisplayNameFor(model => model.Telefone)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.telefoneBeneficiario)
+            @Html.DisplayFor(model => model.Telefone)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Familia.nomeFamilia)
+            @Html.DisplayNameFor(model => model.Familia.Nome)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Familia.nomeFamilia)
+            @Html.DisplayFor(model => model.Familia.Nome)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.idBeneficiario }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar atras", "Index")
 </p>

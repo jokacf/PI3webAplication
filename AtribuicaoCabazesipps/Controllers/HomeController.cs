@@ -16,7 +16,7 @@ namespace AtribuicaoCabazesipps.Controllers
 
         public ActionResult AfterRegister()
         {
-            gestaoCabazesEntities db = new gestaoCabazesEntities();
+            bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
             return View(db.Instituicao.ToList());
         }
 

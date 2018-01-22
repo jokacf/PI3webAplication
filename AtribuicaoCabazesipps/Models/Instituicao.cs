@@ -17,15 +17,17 @@ namespace AtribuicaoCabazesipps.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Instituicao()
         {
-            this.BancoAlimentar = new HashSet<BancoAlimentar>();
+            this.Familia = new HashSet<Familia>();
         }
     
-        public int idInstituicao { get; set; }
-        public string nomeInstituicao { get; set; }
-        public int nifInstituicao { get; set; }
-        public int telefoneInstituicao { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public int NIF { get; set; }
+        public int Telefone { get; set; }
+        public string IdUser { get; set; }
     
+        public virtual AspNetUsers AspNetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BancoAlimentar> BancoAlimentar { get; set; }
+        public virtual ICollection<Familia> Familia { get; set; }
     }
 }

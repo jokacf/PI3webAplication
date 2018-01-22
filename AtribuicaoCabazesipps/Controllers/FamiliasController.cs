@@ -7,27 +7,30 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AtribuicaoCabazesipps.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
-    [Authorize]
     public class FamiliasController : Controller
     {
-        private gestaoCabazesEntities db = new gestaoCabazesEntities();
+        private bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
 
         // GET: Familias
         public ActionResult Index()
         {
-            // ljhj joaquim
-            // joka2
-            return View(db.Familia.ToList());
+            if (User.IsInRole("Instituicao"))
+            {
+                var familias = db.Familia.Where(m => m.Instituicao.Id.Equals(m.IdInstituicao)).ToList();
+                return View(familias);
+            }else if (User.IsInRole("Admin"))
+            {
+                var familia = db.Familia.Include(f => f.Instituicao);
+                return View(familia.ToList());
+            }
+            return null;
         }
 
-        public ActionResult byInstituicao(int id)
-        {
-            var beneficiarios = db.Instituicao.Where(m => m.idInstituicao.Equals(id)).ToList();
-            return View(beneficiarios);
-       }
 
         // GET: Familias/Details/5
         public ActionResult Details(int? id)
@@ -47,6 +50,7 @@ namespace AtribuicaoCabazesipps.Controllers
         // GET: Familias/Create
         public ActionResult Create()
         {
+            ViewBag.IdInstituicao = new SelectList(db.Instituicao, "Id", "Nome");
             return View();
         }
 
@@ -55,17 +59,21 @@ namespace AtribuicaoCabazesipps.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idFamilia,nomeFamilia,nomeResponsavel,telefoneResponsavel,nifResponsavel,biResponsavel,numeroMembros")] Familia familia)
+        public ActionResult Create([Bind(Include = "Id,Nome,NomeResponsavel,TelefoneResponsavel,NIFResponsavel,BIResponsavel,NumeroMembros")] Familia familia)
         {
             if (ModelState.IsValid)
             {
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                var id = user.Id.ToString();
+                var instituicao = db.Instituicao.Where(f => f.IdUser.Equals(id)).First();
+                familia.IdInstituicao = instituicao.Id;
                 db.Familia.Add(familia);
-                //db.Beneficiario.Add(new Beneficiario(beneficiario));
                 db.SaveChanges();
-                TempData["idFamilia"] = familia.idFamilia;
-                return RedirectToAction("Create", "Beneficiarios");
+                TempData["IdFamilia"] = familia.Id;
+                return RedirectToAction("Create","Beneficiarios");
             }
 
+            ViewBag.IdInstituicao = new SelectList(db.Instituicao, "Id", "Nome", familia.IdInstituicao);
             return View(familia);
         }
 
@@ -81,6 +89,7 @@ namespace AtribuicaoCabazesipps.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IdInstituicao = new SelectList(db.Instituicao, "Id", "Nome", familia.IdInstituicao);
             return View(familia);
         }
 
@@ -89,7 +98,7 @@ namespace AtribuicaoCabazesipps.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idFamilia,nomeFamilia,nomeResponsavel,telefoneResponsavel,nifResponsavel,biResponsavel,numeroMembros")] Familia familia)
+        public ActionResult Edit([Bind(Include = "Id,Nome,NomeResponsavel,TelefoneResponsavel,NIFResponsavel,BIResponsavel,NumeroMembros,IdInstituicao")] Familia familia)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +106,7 @@ namespace AtribuicaoCabazesipps.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.IdInstituicao = new SelectList(db.Instituicao, "Id", "Nome", familia.IdInstituicao);
             return View(familia);
         }
 
