@@ -147,13 +147,12 @@ namespace AtribuicaoCabazesipps.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, [Bind(Include = "Id,Nome,Nif,Telefone")] Instituicao instituicao)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                var instituicao = new ApplicationUser { }
                 if (result.Succeeded)
                 {
                     bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
@@ -161,15 +160,12 @@ namespace AtribuicaoCabazesipps.Controllers
                     Session["lastIdregistered"] = currentUser.Id;
                     var roleresult = UserManager.AddToRole(currentUser.Id, "Instituicao");
 
-                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    var id = (string)Session["lastIdregistered"];
+                    instituicao.IdUser = id;
+                    db.Instituicao.Add(instituicao);
+                    db.SaveChanges();
 
-                    // Para obter mais informações sobre como habilitar a confirmação da conta e redefinição de senha, visite https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Enviar um email com este link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirmar sua conta", "Confirme sua conta clicando <a href=\"" + callbackUrl + "\">aqui</a>");
-
-                    return RedirectToAction("Create", "Instituicaos");
+                    return RedirectToAction("Index", "Instituicaos");
                 }
                 AddErrors(result);
             }
