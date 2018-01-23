@@ -38,7 +38,16 @@ namespace AtribuicaoCabazesipps.Controllers
 
         // GET: Beneficiarios/Create
         public ActionResult Create()
-        {
+        {          
+                try
+                {
+                    int idFamilia = (int)TempData["idFamilia"];
+                    ViewBag.Familia = db.Familia.Where(f => f.Id == idFamilia).First();
+                }
+                catch (Exception e)
+                {
+
+                }
             ViewBag.IdFamilia = new SelectList(db.Familia, "Id", "Nome");
             return View();
         }
@@ -54,10 +63,18 @@ namespace AtribuicaoCabazesipps.Controllers
             {
                 db.Beneficiario.Add(beneficiario);
                 db.SaveChanges();
+                var numeroMembrosRequerido = db.Familia.Where(f => f.Id == beneficiario.IdFamilia).First().NumeroMembros;
+                var numeroDeMembrosRegistados = db.Beneficiario.Count(b => b.IdFamilia == beneficiario.Familia.Id);
+
+                if (numeroMembrosRequerido > numeroDeMembrosRegistados)
+                {
+                    TempData["idFamilia"] = beneficiario.IdFamilia;                
+                    return RedirectToAction("Create");
+                }
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdFamilia = new SelectList(db.Familia, "Id", "Nome", beneficiario.IdFamilia);
+            ViewBag.IdFamilia = new SelectList(db.Familia, "idFamilia", "nomeFamilia", beneficiario.IdFamilia);
             return View(beneficiario);
         }
 

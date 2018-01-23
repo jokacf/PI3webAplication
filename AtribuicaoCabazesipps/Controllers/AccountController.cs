@@ -12,7 +12,7 @@ using AtribuicaoCabazesipps.Models;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -136,8 +136,7 @@ namespace AtribuicaoCabazesipps.Controllers
 
         //
         // GET: /Account/Register
-        //[Authorize(Roles = "Admin")]
-        //[AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
@@ -146,8 +145,7 @@ namespace AtribuicaoCabazesipps.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
-        //[AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -155,6 +153,7 @@ namespace AtribuicaoCabazesipps.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                var instituicao = new ApplicationUser { }
                 if (result.Succeeded)
                 {
                     bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();

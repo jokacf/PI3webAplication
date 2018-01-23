@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Introduzir beneficiário";
 }
-
+<h2>@ViewBag.Title</h2>
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -48,8 +48,8 @@
             <div class="col-md-10">
                 @if (null != ViewBag.Familia)
                 {
-                    <input type="hidden" name="fk_idFamilia" value="@ViewBag.Familia.idFamilia" />
-                    <text>@ViewBag.Familia.nomeFamilia</text>
+                    <input type="hidden" name="IdFamilia" value="@ViewBag.Familia.Id" />
+                    <text> @ViewBag.Familia.Nome</text>
                 }
                 else
                 {

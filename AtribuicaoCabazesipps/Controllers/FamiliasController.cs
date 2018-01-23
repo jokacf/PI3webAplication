@@ -19,9 +19,10 @@ namespace AtribuicaoCabazesipps.Controllers
         // GET: Familias
         public ActionResult Index()
         {
+            
             if (User.IsInRole("Instituicao"))
             {
-                var familias = db.Familia.Where(m => m.Instituicao.Id.Equals(m.IdInstituicao)).ToList();
+                var familias = db.Familia.Where(f => f.IdInstituicao.Equals(f.Instituicao.Id)).ToList();
                 return View(familias);
             }else if (User.IsInRole("Admin"))
             {
@@ -69,7 +70,8 @@ namespace AtribuicaoCabazesipps.Controllers
                 familia.IdInstituicao = instituicao.Id;
                 db.Familia.Add(familia);
                 db.SaveChanges();
-                TempData["IdFamilia"] = familia.Id;
+                TempData["idFamilia"] = familia.Id;
+                TempData["NomeFamilia"] = familia.Nome;
                 return RedirectToAction("Create","Beneficiarios");
             }
 
