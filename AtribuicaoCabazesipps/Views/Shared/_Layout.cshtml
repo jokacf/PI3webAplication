@@ -20,16 +20,17 @@
                 </button>
                 @if (Request.IsAuthenticated)
                 {
-                @Html.ActionLink("Atribuição de cabazes", "Index", "Familias", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Banco Alimentar - Cabazes", "Index", "Familias", new { area = "" }, new { @class = "navbar-brand" })
                 }
                 else
                 {
-                @Html.ActionLink("Atribuição de cabazes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Banco Alimentar - Cabazes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 }
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                @if (Request.IsAuthenticated && User.IsInRole("Admin")){
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
                     <li>@Html.ActionLink("Registar Instituicao", "Register", "Account")</li>
                     <li>@Html.ActionLink("Instituicoes", "Index", "Instituicaos")</li>
                     <li>@Html.ActionLink("Familias", "Index", "Familias")</li>
@@ -37,9 +38,15 @@
                 }
                 else if (Request.IsAuthenticated && User.IsInRole("Instituicao"))
                 {
+                    <li>@Html.ActionLink("Contactos", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Registar Familia", "Create", "Familias")</li>
                     <li>@Html.ActionLink("Familias", "Index", "Familias")</li>
-                    <li>@Html.ActionLink("Beneficiarios", "Index", "Beneficiarios")</li>                  
+                    <li>@Html.ActionLink("Beneficiarios", "Index", "Beneficiarios")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Sobre", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contactos", "Contact", "Home")</li>
                 }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -48,9 +55,9 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
+        <p></p>
         <footer>
-            <p>&copy; @DateTime.Now.Year - Atribuicao de cabazes</p>
+            <p>&nbsp; &copy; @DateTime.Now.Year - Atribuicao de cabazes</p>
         </footer>
     </div>
 

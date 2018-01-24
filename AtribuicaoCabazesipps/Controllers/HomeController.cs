@@ -14,16 +14,8 @@ namespace AtribuicaoCabazesipps.Controllers
             return View();
         }
 
-        public ActionResult AfterRegister()
-        {
-            bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
-            return View(db.Instituicao.ToList());
-        }
-
         public ActionResult About()
         {
-            ViewBag.Message = "Banco Alimentar";
-
             return View();
         }
 
@@ -31,8 +23,6 @@ namespace AtribuicaoCabazesipps.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

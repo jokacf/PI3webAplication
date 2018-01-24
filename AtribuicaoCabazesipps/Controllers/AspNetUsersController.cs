@@ -7,117 +7,109 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AtribuicaoCabazesipps.Models;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.AspNet.Identity;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
-    [Authorize]
-    public class InstituicaosController : Controller
+    public class AspNetUsersController : Controller
     {
         private bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
 
-        // GET: Instituicaos
+        // GET: AspNetUsers
         public ActionResult Index()
         {
-            return View(db.Instituicao.ToList());
+            return View(db.AspNetUsers.ToList());
         }
 
-        // GET: Instituicaos/Details/5
-        public ActionResult Details(int? id)
+        // GET: AspNetUsers/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instituicao instituicao = db.Instituicao.Find(id);
-            if (instituicao == null)
+            AspNetUsers aspNetUsers = db.AspNetUsers.Find(id);
+            if (aspNetUsers == null)
             {
                 return HttpNotFound();
             }
-            return View(instituicao);
+            return View(aspNetUsers);
         }
 
-        // GET: Instituicaos/Create
+        // GET: AspNetUsers/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Instituicaos/Create
+        // POST: AspNetUsers/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,Nif,Telefone")] Instituicao instituicao)
+        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUsers aspNetUsers)
         {
             if (ModelState.IsValid)
             {
-                var id = (string)Session["lastIdregistered"];
-                instituicao.IdUser = id;
-                db.Instituicao.Add(instituicao);
+                db.AspNetUsers.Add(aspNetUsers);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(instituicao);
+            return View(aspNetUsers);
         }
 
-        // GET: Instituicaos/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: AspNetUsers/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instituicao instituicao = db.Instituicao.Find(id);
-            if (instituicao == null)
+            AspNetUsers aspNetUsers = db.AspNetUsers.Find(id);
+            if (aspNetUsers == null)
             {
                 return HttpNotFound();
             }
-            return View(instituicao);
+            return View(aspNetUsers);
         }
 
-        // POST: Instituicaos/Edit/5
+        // POST: AspNetUsers/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Nif,Telefone,IdUser")] Instituicao instituicao)
+        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUsers aspNetUsers)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(instituicao).State = EntityState.Modified;
+                db.Entry(aspNetUsers).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(instituicao);
+            return View(aspNetUsers);
         }
 
-        // GET: Instituicaos/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: ANspetUsers/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
-            Instituicao instituicao = db.Instituicao.Find(id);
-            if (instituicao == null)
+            AspNetUsers aspNetUsers = db.AspNetUsers.Find(id);
+            if (aspNetUsers == null)
             {
                 return HttpNotFound();
             }
-            return View(instituicao);
+            return View(aspNetUsers);
         }
 
-        // POST: Instituicaos/Delete/5
+        // POST: AspNetUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Instituicao instituicao = db.Instituicao.Find(id);
-            AspNetUsers aspNetUsers = db.AspNetUsers.Find(instituicao.IdUser);
-            db.Instituicao.Remove(instituicao);
+            AspNetUsers aspNetUsers = db.AspNetUsers.Find(id);
             db.AspNetUsers.Remove(aspNetUsers);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -11,7 +11,8 @@ namespace AtribuicaoCabazesipps.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Familia
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,12 +22,19 @@ namespace AtribuicaoCabazesipps.Models
         }
     
         public int Id { get; set; }
+        [Display(Name="Nome da familia")]
         public string Nome { get; set; }
+        [Display(Name = "Nome do responsavel")]
         public string NomeResponsavel { get; set; }
+        [Display(Name = "Telefone do responsavel")]
         public int TelefoneResponsavel { get; set; }
+        [Display(Name = "NIF do responsavel")]
         public int NIFResponsavel { get; set; }
+        [Display(Name = "BI do responsavel")]
         public int BIResponsavel { get; set; }
+        [Display(Name = "Numero de membros")]
         public int NumeroMembros { get; set; }
+        [Display(Name = "ID da instituicao: ")]
         public int IdInstituicao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

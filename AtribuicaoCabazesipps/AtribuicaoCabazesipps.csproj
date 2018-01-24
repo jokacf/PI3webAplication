@@ -192,6 +192,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AspNetUsersController.cs" />
     <Compile Include="Controllers\BeneficiariosController.cs" />
     <Compile Include="Controllers\FamiliasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -337,12 +338,12 @@
     <Content Include="Views\Beneficiarios\Details.cshtml" />
     <Content Include="Views\Beneficiarios\Edit.cshtml" />
     <Content Include="Views\Beneficiarios\Index.cshtml" />
-    <Content Include="Views\Home\AfterRegister.cshtml" />
     <Content Include="Views\Beneficiarios\Create.cshtml" />
     <Content Include="Views\Familias\byInstituicao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AspNetUsers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

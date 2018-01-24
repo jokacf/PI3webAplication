@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
+    [Authorize]
     public class FamiliasController : Controller
     {
         private bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
@@ -22,7 +23,8 @@ namespace AtribuicaoCabazesipps.Controllers
             
             if (User.IsInRole("Instituicao"))
             {
-                var familias = db.Familia.Where(f => f.IdInstituicao.Equals(f.Instituicao.Id)).ToList();
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                var familias = db.Familia.Where(f => f.Instituicao.IdUser.Equals(user.Id)).ToList();
                 return View(familias);
             }else if (User.IsInRole("Admin"))
             {
@@ -60,23 +62,48 @@ namespace AtribuicaoCabazesipps.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,NomeResponsavel,TelefoneResponsavel,NIFResponsavel,BIResponsavel,NumeroMembros")] Familia familia)
+        [ActionName("Create")]
+        public ActionResult CreatePost()
         {
+            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var instituicao = db.Instituicao.Where(f => f.IdUser.Equals(user.Id)).First();
+
+            var nomeFamilia = Request["Nome"];
+            var nomeResponsavel = Request["NomeResponsavel"];
+            var telefoneResponsavel = Request["TelefoneResponsavel"];
+            var nifResponsavel = Request["NIFResponsavel"];
+            var biResponsavel = Request["BIResponsavel"];
+            var numeroMembros = Request["NumeroMembros"];
+
             if (ModelState.IsValid)
             {
-                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-                var id = user.Id.ToString();
-                var instituicao = db.Instituicao.Where(f => f.IdUser.Equals(id)).First();
+                Familia familia = new Familia();
+                familia.Nome = nomeFamilia;
+                familia.NomeResponsavel = nomeResponsavel;
+                familia.TelefoneResponsavel = int.Parse(telefoneResponsavel);
+                familia.NIFResponsavel = int.Parse(nifResponsavel);
+                familia.BIResponsavel = int.Parse(biResponsavel);
+                familia.NumeroMembros = int.Parse(numeroMembros);
                 familia.IdInstituicao = instituicao.Id;
                 db.Familia.Add(familia);
                 db.SaveChanges();
+
+                Beneficiario beneficiario = new Beneficiario();
+                beneficiario.Nome = nomeResponsavel;
+                beneficiario.NIF = int.Parse(nifResponsavel);
+                beneficiario.BI = int.Parse(biResponsavel);
+                beneficiario.Telefone = int.Parse(telefoneResponsavel);
+                beneficiario.IdFamilia = db.Familia.Max(item => item.Id); ;
+                db.Beneficiario.Add(beneficiario);
+                db.SaveChanges();
+
+                ViewBag.Instituicao = new SelectList(db.Instituicao, "Id", "Nome", familia.IdInstituicao);
                 TempData["idFamilia"] = familia.Id;
                 TempData["NomeFamilia"] = familia.Nome;
                 return RedirectToAction("Create","Beneficiarios");
             }
-
-            ViewBag.IdInstituicao = new SelectList(db.Instituicao, "Id", "Nome", familia.IdInstituicao);
-            return View(familia);
+            return null;
+            
         }
 
         // GET: Familias/Edit/5

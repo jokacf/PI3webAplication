@@ -11,10 +11,12 @@ namespace AtribuicaoCabazesipps.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Beneficiario
     {
         public int Id { get; set; }
+        [Display(Name= "Beneficiário")]
         public string Nome { get; set; }
         public int NIF { get; set; }
         public int BI { get; set; }

@@ -11,7 +11,8 @@ namespace AtribuicaoCabazesipps.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Instituicao
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +22,7 @@ namespace AtribuicaoCabazesipps.Models
         }
     
         public int Id { get; set; }
+        [Display(Name= "Instituição")]
         public string Nome { get; set; }
         public int NIF { get; set; }
         public int Telefone { get; set; }

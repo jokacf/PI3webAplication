@@ -7,9 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AtribuicaoCabazesipps.Models;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
+    [Authorize]
     public class BeneficiariosController : Controller
     {
         private bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
@@ -17,8 +20,18 @@ namespace AtribuicaoCabazesipps.Controllers
         // GET: Beneficiarios
         public ActionResult Index()
         {
-            var beneficiario = db.Beneficiario.Include(b => b.Familia);
-            return View(beneficiario.ToList());
+            if (User.IsInRole("Instituicao"))
+            {
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                var beneficiarios = db.Beneficiario.Where(f => f.Familia.Instituicao.IdUser.Equals(user.Id)).ToList();
+                return View(beneficiarios);
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                var beneficiario = db.Beneficiario.Include(b => b.Familia);
+                return View(beneficiario.ToList());
+            }
+            return null;        
         }
 
         // GET: Beneficiarios/Details/5
@@ -64,9 +77,9 @@ namespace AtribuicaoCabazesipps.Controllers
                 db.Beneficiario.Add(beneficiario);
                 db.SaveChanges();
                 var numeroMembrosRequerido = db.Familia.Where(f => f.Id == beneficiario.IdFamilia).First().NumeroMembros;
-                var numeroDeMembrosRegistados = db.Beneficiario.Count(b => b.IdFamilia == beneficiario.Familia.Id);
+                var numeroDeMembrosRegistados = db.Beneficiario.Count(b => b.IdFamilia == beneficiario.Familia.Id) + 1;
 
-                if (numeroMembrosRequerido > numeroDeMembrosRegistados)
+                if (numeroMembrosRequerido > numeroDeMembrosRegistados )
                 {
                     TempData["idFamilia"] = beneficiario.IdFamilia;                
                     return RedirectToAction("Create");
