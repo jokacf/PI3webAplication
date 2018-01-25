@@ -34,6 +34,13 @@ namespace AtribuicaoCabazesipps.Controllers
             return null;        
         }
 
+        public ActionResult ByFamilia(int id)
+        {
+            var beneficiarios = db.Beneficiario.Where(m => m.IdFamilia.Equals(id)).ToList();
+            ViewBag.Familia = db.Familia.Where(f => f.Id == id).FirstOrDefault();
+            return View(beneficiarios);
+        }
+
         // GET: Beneficiarios/Details/5
         public ActionResult Details(int? id)
         {
@@ -50,17 +57,21 @@ namespace AtribuicaoCabazesipps.Controllers
         }
 
         // GET: Beneficiarios/Create
-        public ActionResult Create()
-        {          
-                try
-                {
-                    int idFamilia = (int)TempData["idFamilia"];
-                    ViewBag.Familia = db.Familia.Where(f => f.Id == idFamilia).First();
-                }
-                catch (Exception e)
-                {
-
-                }
+        public ActionResult Create(int id = 0)
+        {
+            if (ViewBag.IdFamilia != null) {
+                int idFamilia = (int)TempData["idFamilia"];
+                ViewBag.Familia = db.Familia.Where(f => f.Id == idFamilia).First();
+                
+            }
+            else if (id != 0)
+            {
+                var fam = db.Familia.Where(f => f.Id == id).First();
+                ViewBag.Familia = fam;
+                fam.NumeroMembros = fam.NumeroMembros + 1;
+                db.Entry(fam).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             ViewBag.IdFamilia = new SelectList(db.Familia, "Id", "Nome");
             return View();
         }
@@ -75,16 +86,28 @@ namespace AtribuicaoCabazesipps.Controllers
             if (ModelState.IsValid)
             {
                 db.Beneficiario.Add(beneficiario);
-                db.SaveChanges();
-                var numeroMembrosRequerido = db.Familia.Where(f => f.Id == beneficiario.IdFamilia).First().NumeroMembros;
-                var numeroDeMembrosRegistados = db.Beneficiario.Count(b => b.IdFamilia == beneficiario.Familia.Id) + 1;
-
-                if (numeroMembrosRequerido > numeroDeMembrosRegistados )
+                try
                 {
-                    TempData["idFamilia"] = beneficiario.IdFamilia;                
+                    db.SaveChanges();
+                    var numeroMembrosRequerido = db.Familia.Where(f => f.Id == beneficiario.IdFamilia).First().NumeroMembros;
+                    var numeroDeMembrosRegistados = db.Beneficiario.Count(b => b.IdFamilia == beneficiario.Familia.Id) + 1;
+
+                    if (numeroMembrosRequerido > numeroDeMembrosRegistados)
+                    {
+                        TempData["idFamilia"] = beneficiario.IdFamilia;
+                        TempData["MessageBeneficiario"] = null;
+                        return RedirectToAction("Create");
+                    }
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    TempData["MessageBeneficiario"] = "Atenção, dados introduzidos já existentes na bases de dados!";
+                    TempData["idFamilia"] = db.Familia.Max(item => item.Id);
                     return RedirectToAction("Create");
                 }
-                return RedirectToAction("Index");
+                
+                
             }
 
             ViewBag.IdFamilia = new SelectList(db.Familia, "idFamilia", "nomeFamilia", beneficiario.IdFamilia);
@@ -99,6 +122,7 @@ namespace AtribuicaoCabazesipps.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Beneficiario beneficiario = db.Beneficiario.Find(id);
+            Session["idFamilia"] = beneficiario.IdFamilia;
             if (beneficiario == null)
             {
                 return HttpNotFound();
@@ -112,10 +136,11 @@ namespace AtribuicaoCabazesipps.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,NIF,BI,Telefone,IdFamilia")] Beneficiario beneficiario)
+        public ActionResult Edit([Bind(Include = "Id,Nome,NIF,BI,Telefone")] Beneficiario beneficiario)
         {
             if (ModelState.IsValid)
             {
+                beneficiario.IdFamilia = (int)Session["idFamilia"];
                 db.Entry(beneficiario).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -135,6 +160,13 @@ namespace AtribuicaoCabazesipps.Controllers
             if (beneficiario == null)
             {
                 return HttpNotFound();
+            }
+            var fam = db.Familia.Where(f => f.Id == beneficiario.IdFamilia).First();
+            ViewBag.Familia = fam;
+            if(fam.NumeroMembros != 0) { 
+            fam.NumeroMembros = fam.NumeroMembros - 1;
+            db.Entry(fam).State = EntityState.Modified;
+            db.SaveChanges();
             }
             return View(beneficiario);
         }

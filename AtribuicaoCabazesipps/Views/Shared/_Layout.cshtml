@@ -18,13 +18,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @if (Request.IsAuthenticated)
+                @if (User.IsInRole("Admin"))
                 {
-                @Html.ActionLink("Banco Alimentar - Cabazes", "Index", "Familias", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Banco Alimentar - Cabazes", "Index", "Instituicaos", new { area = "" }, new { @class = "navbar-brand" })
+                }
+                else if (User.IsInRole("Instituicao"))
+                {
+                    @Html.ActionLink("Banco Alimentar - Cabazes", "Index", "Familias", new { area = "" }, new { @class = "navbar-brand" })
                 }
                 else
                 {
-                @Html.ActionLink("Banco Alimentar - Cabazes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Banco Alimentar - Cabazes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 }
             </div>
             <div class="navbar-collapse collapse">

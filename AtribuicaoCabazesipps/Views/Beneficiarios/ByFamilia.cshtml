@@ -1,0 +1,62 @@
+﻿@model IEnumerable<AtribuicaoCabazesipps.Models.Beneficiario>
+@{
+    var result = Model.GroupBy(x => x.Familia.Nome);
+    
+}
+<h2>Familia - @foreach (var item in result){<span>@item.Key</span>}</h2> 
+@Html.ActionLink(
+    "Inserir novo beneficiario",                             // linkText
+    "Create",                                    // actionName
+    "Beneficiarios",                                                   // controllerName
+    new
+    {                                                     // routeValues
+        id = ViewBag.Familia.Id
+    },
+    null                                                      // htmlAttributes
+)
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NIF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Familia.Nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NIF)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Familia.Nome)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detailhes", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

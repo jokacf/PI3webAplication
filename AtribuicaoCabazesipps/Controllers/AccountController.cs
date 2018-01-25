@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AtribuicaoCabazesipps.Models;
+using System.Data.Entity.Core;
+using System.Data.SqlClient;
 
 namespace AtribuicaoCabazesipps.Controllers
 {
@@ -147,25 +149,32 @@ namespace AtribuicaoCabazesipps.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, [Bind(Include = "Id, Nome, NIF, Telefone")] Instituicao instituicao)
+        public async Task<ActionResult> Register(RegisterViewModel model, [Bind(Include = "Id,Nome,Nif,Telefone")] Instituicao instituicao)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                //var instituicao = new ApplicationUser {  }
                 if (result.Succeeded)
                 {
                     bancoAlimentarCabazesEntidades db = new bancoAlimentarCabazesEntidades();
-                    var currentUser = UserManager.FindById(user.Id);
-                   
-                    var roleresult = UserManager.AddToRole(currentUser.Id, "Instituicao");
-                    
+                    var currentUser = UserManager.FindById(user.Id);             
+                    var roleresult = UserManager.AddToRole(currentUser.Id, "Instituicao");                   
                     instituicao.IdUser = currentUser.Id;
                     db.Instituicao.Add(instituicao);
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index", "Instituicaos");
+                    try
+                    {
+                        db.SaveChanges(); // BOOM
+                        return RedirectToAction("Index", "Instituicaos");
+                    }
+                    catch (Exception)
+                    {
+                        TempData["MessageAccount"] = "Atenção, dados introduzidos já existentes na bases de dados!";
+                        await UserManager.DeleteAsync(currentUser);
+                        //db.AspNetUsers.Remove(currentUser);
+                         return RedirectToAction("Register", "Account");
+                    }
+                    
                 }
                 AddErrors(result);
             }

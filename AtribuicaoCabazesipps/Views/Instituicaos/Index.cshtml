@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<AtribuicaoCabazesipps.Models.Instituicao>
 <h2>Instituições registadas</h2>
+@Html.ActionLink("Registar nova Instituicao", "Register", "Account")
 <br />
 <table class="table">
     <tr>
@@ -18,7 +19,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Nome)
+            <a href="Familias/ByInstituicao/@Html.DisplayFor(modelItem => item.Id)">@Html.DisplayFor(modelItem => item.Nome) </a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.NIF)

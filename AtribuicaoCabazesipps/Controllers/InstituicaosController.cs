@@ -54,9 +54,9 @@ namespace AtribuicaoCabazesipps.Controllers
             if (ModelState.IsValid)
             {
                 var id = (string)Session["lastIdregistered"];
-                instituicao.IdUser = id;
-                db.Instituicao.Add(instituicao);
-                db.SaveChanges();
+                
+                //db.Instituicao.Add(instituicao);
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -71,6 +71,7 @@ namespace AtribuicaoCabazesipps.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Instituicao instituicao = db.Instituicao.Find(id);
+            Session["IdtoEdit"] = instituicao.IdUser;
             if (instituicao == null)
             {
                 return HttpNotFound();
@@ -83,10 +84,13 @@ namespace AtribuicaoCabazesipps.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Nif,Telefone,IdUser")] Instituicao instituicao)
+        public ActionResult Edit([Bind(Include = "Id,Nome,Nif,Telefone")] Instituicao instituicao)
         {
             if (ModelState.IsValid)
             {
+                var id = (string)Session["IdtoEdit"];
+                //a partir do index enviar o id do user da familia selecionada
+                instituicao.IdUser = id;
                 db.Entry(instituicao).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
