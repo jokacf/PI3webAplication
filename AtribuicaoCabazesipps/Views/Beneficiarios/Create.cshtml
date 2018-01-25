@@ -3,7 +3,6 @@
     ViewBag.Title = "Introduzir beneficiário";
 }
 <h2>@ViewBag.Title</h2>
-@Html.ActionLink("Inserir novo beneficiario", "Create")
 @if (TempData["MessageBeneficiario"] != null)
 {
     <font color="red"><h3>@TempData["MessageBeneficiario"] </h3></font>

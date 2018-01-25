@@ -59,20 +59,19 @@ namespace AtribuicaoCabazesipps.Controllers
         // GET: Beneficiarios/Create
         public ActionResult Create(int id = 0)
         {
-            if (ViewBag.IdFamilia != null) {
-                int idFamilia = (int)TempData["idFamilia"];
-                ViewBag.Familia = db.Familia.Where(f => f.Id == idFamilia).First();
-                
-            }
-            else if (id != 0)
+            if (id == 0)
             {
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                ViewBag.IdFamilia = new SelectList(db.Familia.Where(f => f.Instituicao.IdUser.Equals(user.Id)).ToList(), "Id", "Nome");
+            }
+            else{
                 var fam = db.Familia.Where(f => f.Id == id).First();
                 ViewBag.Familia = fam;
                 fam.NumeroMembros = fam.NumeroMembros + 1;
                 db.Entry(fam).State = EntityState.Modified;
                 db.SaveChanges();
-            }
-            ViewBag.IdFamilia = new SelectList(db.Familia, "Id", "Nome");
+            }         
+            
             return View();
         }
 

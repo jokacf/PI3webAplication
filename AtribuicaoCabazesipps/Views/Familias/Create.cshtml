@@ -31,7 +31,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.TelefoneResponsavel, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.TelefoneResponsavel, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
+                            @Html.EditorFor(model => model.TelefoneResponsavel, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.TelefoneResponsavel, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -66,7 +66,6 @@
                             @if (null != @ViewBag.IdInstituicao)
                             {
                                 <input type="hidden" name="fk_idFamilia" value="@ViewBag.IdInstituicao" />
-
                             }
                             else
                             {

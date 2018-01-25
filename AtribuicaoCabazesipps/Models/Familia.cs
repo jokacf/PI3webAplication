@@ -27,7 +27,6 @@ namespace AtribuicaoCabazesipps.Models
         [Display(Name = "Nome do responsável")]
         public string NomeResponsavel { get; set; }
         [Display(Name = "Telefone do responsável")]
-        //[MaxLength(9)] [MinLength(9)]
         public int TelefoneResponsavel { get; set; }
         [Display(Name = "NIF do responsável")]
         public int NIFResponsavel { get; set; }
@@ -38,7 +37,7 @@ namespace AtribuicaoCabazesipps.Models
         public int NumeroMembros { get; set; }
         [Display(Name = "ID da instituição")]
         public int IdInstituicao { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Beneficiario> Beneficiario { get; set; }
         public virtual Instituicao Instituicao { get; set; }

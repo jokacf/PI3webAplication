@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<AtribuicaoCabazesipps.Models.Beneficiario>
 
 <h2>Beneficiarios</h2>
+@if(User.IsInRole("Instituicao"))
+{
+@Html.ActionLink("Inserir novo beneficiario", "Create")
+}
+
+
 
 <table class="table">
     <tr>
